@@ -1,0 +1,18 @@
+#!/bin/bash
+
+
+if [ "x$1" == "x-n" ]
+then 
+  F_NOT_ORPH=YES
+fi
+
+for i in `find * -name '*.c'` `find * -name '*.f'`
+do
+  [ -f `echo $i | sed 's/\.[cf]$/.o/' | sed 's/.*\///' ` ] 
+  RETRN=$?
+  if ([ $RETRN -ne 0 ] && ! [ -n "$F_NOT_ORPH" ]) || ([ $RETRN -eq 0 ] &&  [ -n "$F_NOT_ORPH" ])
+  then 
+    echo "$i"
+  fi
+done
+

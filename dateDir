@@ -1,0 +1,9 @@
+#!/bin/bash
+
+#Makes directory in format year.month.day.
+#Example: 2009.11.02
+
+DIRNAME=`date '+%Y.%m.%d'`
+mkdir $DIRNAME
+echo directory $DIRNAME created.
+

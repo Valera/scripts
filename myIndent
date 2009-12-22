@@ -1,0 +1,4 @@
+#!/bin/bash
+
+indent -kr -nut -l 100 $@
+

@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+#!/bin/bash
+
+txtblk='\e[0;30m' # Black - Regular
+txtred='\e[0;31m' # Red
+txtgrn='\e[0;32m' # Green
+txtylw='\e[0;33m' # Yellow
+txtblu='\e[0;34m' # Blue
+txtpur='\e[0;35m' # Purple
+txtcyn='\e[0;36m' # Cyan
+txtwht='\e[0;37m' # White
+
+txtrst='\e[0m'    # Text Reset
+
+# Fuction for printing usual echo in red color.
+redEcho () {
+	echo -ne "${txtred}"
+	echo $@ 
+	echo -ne "${txtrst}"
+}    
+
+greenEcho () {
+	echo -ne "${txtgrn}"
+	echo $@ 
+	echo -ne "${txtrst}"
+}    
+
+mycd () {
+	CONFIG=$HOME/.mycd
+	if ! [ -f $CONFIG ];
+	then
+		touch $CONFIG;
+	fi
+
+	c=0
+	if [ x$# = x0 ]; then
+		for i in `cat $CONFIG`
+		do
+			arr[c]=$i
+			greenEcho $c $i;
+			c=`expr $c + 1`
+		done;
+		read n
+		cd ${arr[n]}
+	else
+		if [ x$1 = xadd ]; then
+			if [ x$# != x2 ]; then
+				redEcho "Please supply correct filename"
+				return 1;
+			fi
+			if [ x. = x`dirname $2` ]; then
+				echo >> $CONFIG `pwd`/$2
+			else
+				echo >> $CONFIG $2
+			fi
+		fi
+	fi
+}
+
